@@ -17,7 +17,7 @@ def greeting():
 
 # app name 
 @app.errorhandler(404) 
-def not_found(e): 
+def not_found(e): #@BUG codecademy had an 'e' in the parameter for some reason; has been deleted
   return render_template("404.html") 
 
 #uncomment the code below here when you are done creating database instance db and models

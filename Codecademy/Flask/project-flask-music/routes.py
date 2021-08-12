@@ -70,22 +70,37 @@ def add_item(user_id, song_id, playlist_id):
 @app.route('/remove_item/<int:user_id>/<int:item_id>')
 def remove_item(user_id, item_id):
    #from the Item model, fetch the item with primary key item_id to be deleted
+   removed_item = Item.query.get(item_id)
    #using db.session delete the item
+   db.session.delete(removed_item)
    #commit the deletion
+   db.session.commit()
+
    return redirect(url_for('profile', user_id = user_id))
    
 #Display the Dashboard page with a form for adding songs
 #Renders the dashboard template
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
-  form = SongForm()
+  # this SongForm() is what is lcoated in the dashboard.html code. 
+  form = SongForm(csrf_enabled=False)
+  print(form.title)
   if request.method == 'POST' and form.validate():
-    new_song = None
-    #create a new song here
+
+    #create the new_song data entry of the Song schema
+    new_song = Song(title = form.title.data, artist = form.artist.data, n = 1)
     #add it to the database
+    db.session.add(new_song)
     #commit to the database
+    db.session.commit()
+
   else:
         flash(form.errors)
-  unpopular_songs = []  #add the ordering query here
+
+  unpopular_songs = Song.query.order_by(Song.n)  #add the ordering query here
+
+  #@BUG : can't figure out how to use an ASC/DESC switch inside of the above line when 'unppoular_songs' is first invoked _ surely order_by() has another method for ordering.
+  unpopular_songs = unpopular_songs[3::-1]
+  #call this Song() instance here because it now will include the updated user's 'new_song' committed to the Song() table
   songs = Song.query.all()
   return render_template('dashboard.html', songs = songs, unpopular_songs = unpopular_songs, form = form)
