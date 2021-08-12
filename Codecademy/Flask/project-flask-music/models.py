@@ -24,7 +24,6 @@ class Song(db.Model):
     return "{} by {}".format(self.title, self.artist)
 
 
-
     
 #create the Item model here + add a nice representation method
 class Item(db.Model):
@@ -33,6 +32,7 @@ class Item(db.Model):
   song_id = db.Column(db.Integer, db.ForeignKey('song.id'))
 
   playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'))  
+    
     
 #create the Playlist model here + add a nice representation method
 class Playlist(db.Model):

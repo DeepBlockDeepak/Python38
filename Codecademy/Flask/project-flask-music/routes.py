@@ -12,6 +12,8 @@ class SongForm(FlaskForm):
   artist = StringField(label = "Artist:", validators=[DataRequired()])
   submit = SubmitField("Add Song")
 
+
+
 #A function we made to check if an item to be added is already in the playlist
 def exists(item, playlist):
   """Return a boolean
@@ -21,6 +23,8 @@ def exists(item, playlist):
     if i.song_id == item.song_id: #check if the primary key is equal
        return True
   return False
+
+
 
 #The home page of FlaskFM
 #Lists all the users currently in the database
@@ -32,18 +36,30 @@ def profiles():
 
     return render_template('users.html', current_users = current_users)
 
+
+
 #Displays profile pages for a user with the user_id primary key
 #renders the profile.html template for a specific user, song library and 
 #the user's playlist 
 @app.route('/profile/<int:user_id>')
 def profile(user_id):
-  #find the user specifed from the url (i.e. the route)
-   user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
+  
+  user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
 
-   songs = Song.query.all()
-   #that user's playlist id is then queried from the Playlist schema
-   my_playlist = Playlist.query.get(user.playlist_id) #change here to a database query
-   return render_template('profile.html', user = user, songs = songs, my_playlist = my_playlist)
+  songs = Song.query.all()
+  #that user's playlist id is then queried from the Playlist table
+  my_playlist = Playlist.query.get(user.playlist_id) #change here to a database query
+
+  #@BUG figure this shit out. We're working on accessing the attributes of the my_playlist.items 
+  if hasattr(my_playlist, 'items'):
+    test_song_id = my_playlist.items.song_id
+    song = Song.query.get(test_song_id)
+    return render_template('test_page.html', template_playlist = my_playlist, template_song = song)
+
+  #needed = Song.query.get(my_playlist.items.song_id)
+
+  return render_template('profile.html', user = user, songs = songs, my_playlist = my_playlist)
+
 
 
 #Adds new songs to a user's playlist from the song library
@@ -77,14 +93,17 @@ def remove_item(user_id, item_id):
    db.session.commit()
 
    return redirect(url_for('profile', user_id = user_id))
-   
+
+
+
+
 #Display the Dashboard page with a form for adding songs
 #Renders the dashboard template
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
   # this SongForm() is what is lcoated in the dashboard.html code. 
   form = SongForm(csrf_enabled=False)
-  print(form.title)
+
   if request.method == 'POST' and form.validate():
 
     #create the new_song data entry of the Song schema
@@ -97,7 +116,7 @@ def dashboard():
   else:
         flash(form.errors)
 
-  unpopular_songs = Song.query.order_by(Song.n)  #add the ordering query here
+  unpopular_songs = Song.query.order_by(Song.n)  #add the ordering query here; does it need a '.all()' at the end?
 
   #@BUG : can't figure out how to use an ASC/DESC switch inside of the above line when 'unppoular_songs' is first invoked _ surely order_by() has another method for ordering.
   unpopular_songs = unpopular_songs[3::-1]
