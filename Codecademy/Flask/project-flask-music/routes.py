@@ -47,15 +47,17 @@ def profile(user_id):
   user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
 
   songs = Song.query.all()
+  #raw_songs = Song.query.filter_bys
   #that user's playlist id is then queried from the Playlist table
   my_playlist = Playlist.query.get(user.playlist_id) #change here to a database query
 
+  """
   #@BUG figure this shit out. We're working on accessing the attributes of the my_playlist.items 
   if hasattr(my_playlist, 'items'):
-    test_song_id = my_playlist.items.song_id
-    song = Song.query.get(test_song_id)
-    return render_template('test_page.html', template_playlist = my_playlist, template_song = song)
-
+    #test_song_id = my_playlist.items.song_id
+    #song = Song.query.get(test_song_id)
+    return render_template('test_page.html', template_playlist = my_playlist, template_songs = songs) #, template_song = song
+  """
   #needed = Song.query.get(my_playlist.items.song_id)
 
   return render_template('profile.html', user = user, songs = songs, my_playlist = my_playlist)

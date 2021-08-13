@@ -6,12 +6,16 @@
      or any file you want-->
 {% block title %}Page Not Found{% endblock %} 
 {% block content %} 
-     <h1>TEST PAGE --- testing the Playlist().items.sond_id extraction</h1> 
+     <h1>TEST PAGE --- testing the Playlist().items.song_id extraction</h1> 
      <h2>Here are the playlist items</h2>
      {% for item in template_playlist.items %}
           <!-- <h2> That item does have the song_id attribute!</h2> -->
-     <p>{{ item.song_id }} the song id.</p>
-     <p style="background-color: darkturquoise;"> {{ template_song.title }} is the title.</p>
+          {% for song_child in template_songs %}
+          {% if song_child.id == item.id %}
+               <p>{{ song_child.title }}</p>
+          {% endif %}
+     {% endfor %}
+     
      {% endfor %}
 
      <a href={{url_for('greeting')}}><p>Click Here</a>To go to back to the Initial greeting page</p> 
