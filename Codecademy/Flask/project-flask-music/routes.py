@@ -64,6 +64,7 @@ def add_item(user_id, song_id, playlist_id):
    new_item = Item(song_id = song_id, playlist_id = playlist_id)
    user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
    my_playlist = Playlist.query.filter_by(id = user.playlist_id).first()
+
    if not exists(new_item, my_playlist.items):
       song = Song.query.get(song_id)
       #using db session add the new item
@@ -76,8 +77,8 @@ def add_item(user_id, song_id, playlist_id):
 
 
 
-#Remove an item from a user's playlist
-#Redirects back to the profile that issues the removal
+#Remove an song from the available Songs() visible from the dashboard
+#Redirects back to the dashboard
 @app.route('/remove_song/<int:song_id>')
 def remove_song(song_id):
   
@@ -89,7 +90,23 @@ def remove_song(song_id):
   #commit the deletion
   db.session.commit()
 
+  #call this function in order to remove any playlist Items() which contain the deleted song
+  delete_removed_song_from_users_playlists(song_id)
+
   return redirect(url_for('dashboard'))
+
+
+#Function which will check each user's playlist.item.song's and see if it matches a newly deleted song from the admin page\
+# if found, remove it from the playlist
+def delete_removed_song_from_users_playlists(deleted_song_id):
+
+  #query all the Item() objects
+  items = Item.query.all()
+
+  #search each item's song_id attr, and delete accordingly
+  for item in items:
+    if item.song_id == deleted_song_id:
+      db.session.delete(item); db.session.commit()
 
 
 
