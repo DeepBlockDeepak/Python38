@@ -53,7 +53,7 @@ def profile(user_id):
 
   #needed = Song.query.get(my_playlist.items.song_id)
 
-  return render_template('profile.html', user = user, songs = songs, my_playlist = my_playlist)
+  return render_template('profile.html', template_user = user, template_songs = songs, template_my_playlist = my_playlist)
 
 
 
@@ -78,16 +78,19 @@ def add_item(user_id, song_id, playlist_id):
 
 #Remove an item from a user's playlist
 #Redirects back to the profile that issues the removal
-@app.route('/remove_item/<int:user_id>/<int:item_id>')
-def remove_item(user_id, item_id):
-   #from the Item model, fetch the item with primary key item_id to be deleted
-   removed_item = Item.query.get(item_id)
-   #using db.session delete the item
-   db.session.delete(removed_item)
-   #commit the deletion
-   db.session.commit()
+@app.route('/remove_song/<int:song_id>')
+def remove_song(song_id):
+  
 
-   return redirect(url_for('profile', user_id = user_id))
+  #from the Item model, fetch the item with primary key item_id to be deleted
+  removed_song = Song.query.get(song_id)
+  #using db.session delete the item
+  db.session.delete(removed_song)
+  #commit the deletion
+  db.session.commit()
+
+  return redirect(url_for('dashboard'))
+
 
 
 
@@ -100,7 +103,7 @@ def dashboard():
   form = SongForm(csrf_enabled=False)
 
   if request.method == 'POST' and form.validate():
-
+  
     #create the new_song data entry of the Song schema
     new_song = Song(title = form.title.data, artist = form.artist.data, n = 1)
     #add it to the database
@@ -109,12 +112,30 @@ def dashboard():
     db.session.commit()
 
   else:
-        flash(form.errors)
+    flash(form.errors)
 
-  unpopular_songs = Song.query.order_by(Song.n)  #add the ordering query here; does it need a '.all()' at the end?
 
-  #@BUG : can't figure out how to use an ASC/DESC switch inside of the above line when 'unppoular_songs' is first invoked _ surely order_by() has another method for ordering.
-  unpopular_songs = unpopular_songs[3::-1]
+  #query the 'n' - star attribute, and sort them in descending order
+  unpopular_songs = Song.query.order_by(Song.n.desc())  
+
+  unpopular_songs = unpopular_songs[:5]
+
   #call this Song() instance here because it now will include the updated user's 'new_song' committed to the Song() table
   songs = Song.query.all()
   return render_template('dashboard.html', songs = songs, unpopular_songs = unpopular_songs, form = form)
+
+
+#Remove an item from a user's playlist
+#Redirects back to the profile that issues the removal
+@app.route('/remove_item/<int:user_id>/<int:item_id>')
+def remove_item(user_id, item_id):
+   #from the Item model, fetch the item with primary key item_id to be deleted
+   removed_item = Item.query.get(item_id)
+   #using db.session delete the item
+   db.session.delete(removed_item)
+   #commit the deletion
+   db.session.commit()
+
+   return redirect(url_for('profile', user_id = user_id))
+
+

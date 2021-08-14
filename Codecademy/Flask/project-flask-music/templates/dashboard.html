@@ -8,12 +8,13 @@
     <h2>Songs:</h2>
 
     {% for song in songs %}
-        <p>{{song}}</p>
+      {% set template_song_id = song.id  %}
+      <p>{{song}} <a href = "{{url_for('remove_song', song_id = template_song_id)}}" >Remove</a></p>
     {% endfor %}
   </div>
 
   <div class="column" style="background-color:#F0F8FF;">
-    <h2>Popularity of songs:</h2>
+    <h2>Top 5 Most Popular songs:</h2>
     {% for song in unpopular_songs %}
         <p>{{song}} only {{song.n}} times added :(</p>
     {% endfor %}

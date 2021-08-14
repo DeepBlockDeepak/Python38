@@ -1,5 +1,15 @@
 from app import app, db
 
+
+"""
+@BUG  
+      * When song removal occurs on the dashboard,
+      *   if that song was in a User's playlist
+      *   it will not be removed from their playlist
+
+"""
+
+
 #the User model: each user has a username, and a playlist_id foreign key referring
 #to the user's Playlist
 class User(db.Model):
