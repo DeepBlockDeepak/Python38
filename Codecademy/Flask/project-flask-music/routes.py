@@ -133,13 +133,13 @@ def dashboard():
 
 
   #query the 'n' - star attribute, and sort them in descending order
-  unpopular_songs = Song.query.order_by(Song.n.desc())  
+  popular_songs = Song.query.order_by(Song.n.desc())  
 
-  unpopular_songs = unpopular_songs[:5]
+  popular_songs = popular_songs[:5]
 
   #call this Song() instance here because it now will include the updated user's 'new_song' committed to the Song() table
   songs = Song.query.all()
-  return render_template('dashboard.html', songs = songs, unpopular_songs = unpopular_songs, form = form)
+  return render_template('dashboard.html', songs = songs, template_popular_songs = popular_songs, form = form)
 
 
 #Remove an item from a user's playlist

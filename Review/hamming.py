@@ -57,9 +57,3 @@ def display(ex_list, n = 16):
 bits = np.random.randint(0,2,256)
 '''
 
-
-
-
-
-
-
