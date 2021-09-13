@@ -1,0 +1,40 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<h2>Hi, admin. Would you like to add more songs?</h2>
+<div class="row">
+  <div class="column" style="background-color:#BDB76B;">
+    <h2>Songs:</h2>
+
+    {% for song in songs %}
+      <!-- {% set template_song_id = song.id  %} !-->
+      <p>{{song}} <a href = "{{url_for('remove_song', song_id = song.id)}}" >Remove</a></p>
+    {% endfor %}
+  </div>
+
+  <div class="column" style="background-color:#F0F8FF;">
+    <h2>Top 5 Most Popular songs:</h2>
+    {% for song in template_popular_songs %}
+        <p>{{song}} only {{song.n}} times added :(</p>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="formwrapper">
+  <h2 class="title">Add new songs:</h2>
+  <form action="" method="post" novalidate>
+  {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=50) }}<br>
+
+        </p>
+        <p>
+            {{ form.artist.label }}<br>
+            {{ form.artist(size=50) }}<br>
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</div>
+{% endblock %}

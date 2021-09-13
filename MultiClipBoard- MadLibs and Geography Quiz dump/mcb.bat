@@ -1,0 +1,1 @@
+@pyw.exe C:\Python38\Scripts\python38_practice\Chapter8\mcb.pyw %*
