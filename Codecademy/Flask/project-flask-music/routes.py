@@ -13,6 +13,14 @@ class SongForm(FlaskForm):
   submit = SubmitField("Add Song")
 
 
+"""
+ADD a UserForm(FlaskForm) that allows the Admin to create new users
+
+Also gives Admin the ability to delete users
+"""
+
+
+
 
 #A function we made to check if an item to be added is already in the playlist
 def exists(item, playlist):
@@ -77,7 +85,7 @@ def add_item(user_id, song_id, playlist_id):
 
 
 
-#Remove an song from the available Songs() visible from the dashboard
+#Remove a song from the available Songs() visible from the dashboard
 #Redirects back to the dashboard
 @app.route('/remove_song/<int:song_id>')
 def remove_song(song_id):

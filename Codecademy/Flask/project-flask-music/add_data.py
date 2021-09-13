@@ -5,6 +5,7 @@ p1 = Playlist(id = 3456)
 p2 = Playlist(id = 2342)
 p3 = Playlist(id = 4576)
 p4 = Playlist(id = 8743)
+
 u1 = User(id = 1, username = "mlky_way", playlist_id = p1.id)
 u2 = User(id = 2, username = "martian2", playlist_id = p2.id)
 u3 = User(id = 3, username = "andromeda_3", playlist_id = p3.id)
