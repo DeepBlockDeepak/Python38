@@ -21,7 +21,8 @@ def square_factor_seeker(area):
         if area - possible_sqrts[counter]>= 0: #if the total panel area still has room after subtracting away the largest sqrt panel
             panel.append(int(possible_sqrts[counter]**0.5)) #add this sqrt panel size to the solution list
             area -= possible_sqrts[counter] #decrement area by the added panel size
-        counter -= 1 #next
+        else:
+            counter -= 1 #next
     '''
     now that area has shrunk, it may not be == 0.
     Because it is a minimum, we should have only the "1"
@@ -34,9 +35,9 @@ def square_factor_seeker(area):
 
 #print (test_val, " = ", square_factor_seeker(test_val), "****", sum(square_factor_seeker(test_val)))
 test_val1 = 100369766
-test_val2 = 72
-test_val3 = 27
-for test_input in [test_val1, test_val2, test_val3]:
+test_val2 = 17
+test_val3 = 18
+for test_input in range(789, 18235):
   print(str(test_input) + " = " + '^2 + '.join(map(str, square_factor_seeker(test_input))) + "^2")
 
 #print("{} + ".format(i)) for i in square_factor_seeker(test_val) if i < len(square_factor_seeker(test_val)) - 1 else print(i)
