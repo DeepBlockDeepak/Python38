@@ -13,7 +13,7 @@ import pyperclip
 import os
 
 #option here to change the directory where the shelve files will be stored
-directory = 'C:\\Python38\\Scripts\\python38_practice\\Chapter8'
+directory = r'C:\\Python38\\Scripts\\python38_practice\\MultiClipBoard- MadLibs and Geography Quiz dump'
 
 #opens the Shelve File and closes the Shelve File
 with shelve.open(os.path.join(directory, 'mcb')) as shelfFile:

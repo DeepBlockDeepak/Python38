@@ -1,1 +1,1 @@
-@pyw.exe C:\Python38\Scripts\python38_practice\Chapter8\mcb.pyw %*
+@pyw.exe "C:\Python38\Scripts\python38_practice\MultiClipBoard- MadLibs and Geography Quiz dump\mcb.pyw" %*
