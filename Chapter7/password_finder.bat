@@ -1,1 +1,0 @@
-@pyw.exe C:\Python38\Scripts\python38_practice\Chapter7\password_finder.pyw %*

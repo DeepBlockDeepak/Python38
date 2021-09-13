@@ -1,9 +1,0 @@
-2021-01-07 13:04:19,869 - DEBUG - Start of program
-2021-01-07 13:04:19,869 - DEBUG - Start of Factorial function. Total = 1
-2021-01-07 13:04:19,869 - DEBUG - The value of i is 1. Total is 1
-2021-01-07 13:04:19,869 - DEBUG - The value of i is 2. Total is 2
-2021-01-07 13:04:19,869 - DEBUG - The value of i is 3. Total is 6
-2021-01-07 13:04:19,869 - DEBUG - The value of i is 4. Total is 24
-2021-01-07 13:04:19,869 - DEBUG - The value of i is 5. Total is 120
-2021-01-07 13:04:19,869 - DEBUG - End of factorial loop
-2021-01-07 13:04:19,869 - CRITICAL - End of the entire script
