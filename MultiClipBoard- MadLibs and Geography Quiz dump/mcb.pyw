@@ -28,13 +28,13 @@ with shelve.open(os.path.join(directory, 'mcb')) as shelfFile:
         
         del shelfFile[sys.argv[2]]
         
-        pyperclip.copy("Multiclipboard keys:\n" + str(list(shelfFile.keys())))
+        pyperclip.copy("Multiclipboard keys:\n" + "".join([("\n" + "*" + key) for key in shelfFile.keys()])) #str(list(shelfFile.keys()))
     
     #concerning cases where the user is trying to list all saved keys, or trying to call the value of a saved key
     elif len(sys.argv) == 2: 
 
         if sys.argv[1].lower() == 'list': #example " mcb list " will return the following string of the of the shelfFile keys
-            pyperclip.copy("Multiclipboard keys:\n"+ str(list(shelfFile.keys())))
+            pyperclip.copy("Multiclipboard keys:\n"+ "".join([("\n" + "* " + key) for key in shelfFile.keys()])) #str(list(shelfFile.keys()))
         
         if sys.argv[1].lower() in shelfFile: #example "mcb dog " will return the clipboard content value of the key 'dog' if dog is in shelfFile
 
