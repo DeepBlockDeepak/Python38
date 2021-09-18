@@ -9,3 +9,4 @@
 'df_concat', (11264, 454)
 'r_gather_and_separate', (13312, 1098)
 'flask_env_setup', (14848, 191)
+'git_repo_from_local', (15360, 332)
