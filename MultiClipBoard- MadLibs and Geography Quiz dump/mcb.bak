@@ -1,5 +1,5 @@
-'tar', (2048, 60)
-'tar_extract', (2560, 102)
+'tar', (2048, 111)
+'tar_extract', (2560, 191)
 'doxygen', (3072, 238)
 'print_token', (6144, 245)
 'gitinspector', (6656, 213)
