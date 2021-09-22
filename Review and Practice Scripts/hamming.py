@@ -4,9 +4,10 @@ import operator as op
 import random
 from math import ceil
 
-random.seed(2)
 
-power = 4; how_many_bits = 2**power
+# @BUG : Currently the display() function doesn't print arrays built with odd powers of 2 correctly (half squares)
+#           Ex: 2^4 = 16, displays 16 bits fine. But 2^5 doesn't show 32 bits. But 2^6 will display the square properly
+power = 6; how_many_bits = 2**power
 
 #list of 16 random bits
 bits = np.random.randint(0,2, how_many_bits)
@@ -31,7 +32,7 @@ def hamming_syndrome(bit_block):
         )
     )
 
-#set the parity bits of the message, bit_block then ready to be sent out
+#set the parity bits of the message 'bit_block'... After, it is then ready to be sent to receiver
 def set_parity_bits(bit_block, i = 0):
     xor_sum = hamming_syndrome(bit_block)
     while(2**i <= xor_sum):
@@ -39,6 +40,11 @@ def set_parity_bits(bit_block, i = 0):
         i += 1
 
 
+
+#show the raw message; Find and print the hamming syndrome value; Set the parity bits of the message; 
+#Display the message again, with the parity bits set properly. Message has been well-prepared at this point
+#Incur an error by flipping a bit. Confirm algorithm by running the message back into the hamming syndrome(),
+#and print the bit that was flipped.
 display(bits)
 print("--", hamming_syndrome(bits), "--")
 print("<>" * 8, "\n")
